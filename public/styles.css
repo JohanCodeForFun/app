@@ -63,3 +63,28 @@ nav {
   margin-bottom: 1.3rem;
   border-bottom: 1px solid gray;
 }
+.add-form {
+  border: 1px solid black;
+  padding: .3rem;
+  width: 24rem;
+}
+
+.form-input {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: .3rem;
+  width: 90%;
+  gap: .5rem;
+}
+
+.form-input-btn {
+  display: flex;
+  width: 90%;
+  justify-content: flex-end;
+}
+
+#addBookBtn {
+  margin-top: .3rem;
+  padding: .3rem 1rem;
+}
