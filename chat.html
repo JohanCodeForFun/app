@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Library | Chat</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="chat.css">
+  <script defer src="/socket.io/socket.io.js"></script>
+  <script defer src="/chat.js" defer></script>
 
 </head>
 <body class="body-container">
@@ -21,6 +24,13 @@
   </nav>
   <div class="main-container">
     <h1>Chat</h1>
+    <div class="chat-container">
+      <div class="message-box"></div>
+      <div class="input-controller">
+        <input type="text" id="message-input">
+        <button type="submit" id="send-button">Skicka</button>
+      </div>
+    </div>
   </div>
 </body>
 </html>
