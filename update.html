@@ -20,7 +20,69 @@
     </ul>
   </nav>
   <div class="main-container">
-  <h1>Library | Uppdatera bok</h1>
+  <h1>Uppdatera bok</h1>
+  <form action="" method="PUT" class="add-form">
+    <div class="form-input">
+      <label for="bookId">Book id: </label>
+      <input id="bookId" type="text" name="bookId" placeholder="Fyll i bok id..." autofocus>
+    </div>
+    <div class="form-input">
+      <label for="author">Författare: </label>
+      <input id="author" type="text" name="author" placeholder="Fyll i författare..." autofocus>
+    </div>
+    <div class="form-input">
+      <label for="title">Tittel: </label>
+      <input id="title" type="text" name="title" placeholder="Skriv in titel...">
+    </div>
+    <div class="form-input">
+      <label for="genre">Genre: </label>
+      <input id="genre" type="text" name="genre" placeholder="Skriv in genre...">
+    </div>
+    <div class="form-input">
+      <label for="published">Publicerad: </label>
+      <input id="published" type="text" name="published" placeholder="Skriv in utkommen...">
+    </div>
+    <div class="form-input">
+      <label for="quantity">Lager: </label>
+      <input id="quantity" type="number" name="quantity" placeholder="Skriv in hur många exemplar...">
+    </div>
+    <div class="form-input-btn">
+    <button id="updateBookBtn" type="submit">Uppdatera bok</button>
+    </div>
+  </form>
   </div>
+
+  <script>
+    const updateBookBtn = document.querySelector('#updateBookBtn');
+    const author = document.querySelector('#author');
+    const title = document.querySelector('#title');
+    const genre = document.querySelector('#genre');
+    const published = document.querySelector('#published');
+    const quantity = document.querySelector('#quantity');
+
+    updateBookBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      const options = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          book_id: bookId.value,
+          author: author.value,
+          title: title.value,
+          genre: genre.value,
+          published: published.value,
+          quantity: quantity.value,
+        })
+      };
+      fetch('http://localhost:3001/catalogue/edit', options)
+      .then(response => console.log(response))
+      .catch(err => {
+        console.error(err)
+      })
+    })
+  </script>
 </body>
 </html>
