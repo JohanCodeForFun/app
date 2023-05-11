@@ -11,16 +11,73 @@
 <body class="body-container">
   <nav>
     <h3>Biblioteket</h3>
-    <ul>
-      <li><a href="/">Sök</a></li>
-      <li><a href="/create">Lägg till bok</a></li>
-      <li><a href="/update">Uppdarera</a></li>
-      <li><a href="/delete">Ta bort</a></li>
-      <li><a href="/chat">Chat</a></li>
+    <ul class="nav-ul">
+      <li class="nav-li"><a href="/">Sök</a></li>
+      <li class="nav-li"><a href="/create">Lägg till bok</a></li>
+      <li class="nav-li"><a href="/update">Uppdarera</a></li>
+      <li class="nav-li"><a href="/delete">Ta bort</a></li>
+      <li class="nav-li"><a href="/chat">Chat</a></li>
     </ul>
   </nav>
   <div class="main-container">
-  <h1>Library | Lägg till bok</h1>
+  <h1>Lägg till bok</h1>
+  <form action="" method="POST" class="add-form">
+    <div class="form-input">
+      <label for="author">Författare: </label>
+      <input id="author" type="text" name="author" placeholder="Fyll i författare..." autofocus>
+    </div>
+    <div class="form-input">
+      <label for="title">Tittel: </label>
+      <input id="title" type="text" name="title" placeholder="Skriv in titel...">
+    </div>
+    <div class="form-input">
+      <label for="genre">Genre: </label>
+      <input id="genre" type="text" name="genre" placeholder="Skriv in titel...">
+    </div>
+    <div class="form-input">
+      <label for="published">Publicerad: </label>
+      <input id="published" type="text" name="published" placeholder="Skriv in titel...">
+    </div>
+    <div class="form-input">
+      <label for="quantity">Lager: </label>
+      <input id="quantity" type="number" name="quantity" placeholder="Skriv in titel...">
+    </div>
+    <div class="form-input-btn">
+    <button id="addBookBtn" type="submit">Lägg till bok</button>
+    </div>
+  </form>
   </div>
+
+  <script>
+    const addBookBtn = document.querySelector('#addBookBtn');
+    const author = document.querySelector('#author');
+    const title = document.querySelector('#title');
+    const genre = document.querySelector('#genre');
+    const published = document.querySelector('#published');
+    const quantity = document.querySelector('#quantity');
+
+    addBookBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          author: author.value,
+          title: title.value,
+          genre: genre.value,
+          published: published.value,
+          quantity: quantity.value,
+        })
+      };
+      fetch('http://localhost:3001/catalogue/add', options)
+      .then(response => console.log(response))
+      .catch(err => {
+        console.error(err)
+      })
+    })
+  </script>
 </body>
 </html>
