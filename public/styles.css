@@ -1,0 +1,54 @@
+body {
+  padding: 1rem;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.body-container {
+  width: 34rem;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 1rem;
+  padding: .5rem;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: .3rem 2rem;
+  border: 1px black solid;
+  border-radius: 2rem;
+}
+
+li {
+  display: inline;
+  padding: .3rem;
+}
+
+.main-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+.radio-input {
+  display: flex;
+  flex-direction: row;
+  gap: .5rem;
+}
+
+.catalogue-container {
+  border: 1px solid black;
+  padding: .3rem;
+  width: 24rem;
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library</title>
+  <link rel="stylesheet" href="public/styles.css">
+</head>
+<body class="body-container">
+  <nav>
+    <h3>Biblioteket</h3>
+    <ul>
+      <li><a href="/search">Sök</a></li>
+      <li><a href="/create">Registrering</a></li>
+      <li><a href="/chat">Chat</a></li>
+    </ul>
+  </nav>
+  <div class="main-container">
+
+    <aside class="search-form">
+      <input type="text" name="search" id="search" placeholder="Sök">
+      <button>Sök</button>
+
+      <div class="radio-input">
+        <input type="radio" id="author" name="search-radio" value="author" checked>
+        <label for="author">Författare</label>
+      </div>
+      <div class="radio-input">
+        <input type="radio" id="title" name="search-radio" value="title">
+        <label for="title">Titel</label>
+      </div>
+    
+    </aside>
+    <main class="catalogue-container">
+      catalogue...
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
