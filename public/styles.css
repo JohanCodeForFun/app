@@ -52,3 +52,14 @@ nav {
   padding: .3rem;
   width: 24rem;
 }
+
+#searchResults {
+  margin: 0;
+  padding: .3rem;
+  list-style-type: none;
+}
+
+.catalogue-result {
+  margin-bottom: 1.3rem;
+  border-bottom: 1px solid gray;
+}

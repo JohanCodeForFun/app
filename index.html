@@ -36,10 +36,9 @@
     
     </aside>
     <main class="catalogue-container">
-      catalogue...
-      <ul id="searchResults">
+      <div id="searchResults">
         <!-- sökresultat -->
-      </ul>
+      </div>
     </main>
   </div>
 
@@ -48,30 +47,45 @@
 
     searchBtn.addEventListener('click', () => {
       // getSearchResults();
-      getResultsByKeyWord();
+      getSearchResults();
     });
 
     async function getSearchResults() {
-      const ul = document.querySelector('#searchResults');
+      const div = document.querySelector('#searchResults');
 
       let catalogueResult = await getResultsByKeyWord();
+      console.log(catalogueResult)
 
       for (const book of catalogueResult) {
-        let li = document.createElement('li');
-        let a = document.createElement('a');
 
-        a.id = book.book_id;
-        a.innerText = book.title
+        div.innerHTML += `
+        <div class="catalogue-result">
+          <p>Titel: ${book.title}. Författare: ${book.author}.</p>
+          <p>Genre: ${book.genre}. Publicerad: ${new Date(book.published).toLocaleDateString()}</p>
+          <p>Böcker i lager: ${book.quantity}, </p>
+        </div>`
+        
+        // let span = document.createElement('span');
+        // let li = document.createElement('li');
+        // let a = document.createElement('a');
+
+        // a.id = book.book_id;
+        // a.innerText = book.title
+
+        // li.appendChild(a);
+        // ul.appendChild(li);
       }
 
-      li.appendChild(a);
-      ul.appendChild(li);
     }
 
     async function getResultsByKeyWord() {
-      let keyword = document.querySelector('#search');
+      let keyword = document.querySelector('#search').value;
 
-      const options = {
+      // if user searches for empty string, return entire catalogue of books
+      // /[A-Za-z0-]+/ regex to match only alphabetics and numbers
+      if (keyword === '') {
+
+        const options = {
         method: 'GET',
         headers: {
           'Accept': 'application/json'
@@ -86,7 +100,25 @@
         console.log(data);
 
         return data
+    } else {
+      const options = {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json'
+        }}
+      
+        let response = await fetch(`http://localhost:3001/library/search?${keyword}`)
+        .catch(err => {
+          console.error(err)
+        });
+
+        let data = await response.json();
+        console.log(data);
+
+        return data
     }
+  }
+
 
   </script>
 </body>
