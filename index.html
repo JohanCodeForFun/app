@@ -46,7 +46,6 @@
     const searchBtn = document.querySelector('#searchBtn');
 
     searchBtn.addEventListener('click', () => {
-      // getSearchResults();
       getSearchResults();
     });
 
@@ -60,20 +59,11 @@
 
         div.innerHTML += `
         <div class="catalogue-result">
+          <p>book id: ${book.book_id}</p>
           <p>Titel: ${book.title}. Författare: ${book.author}.</p>
           <p>Genre: ${book.genre}. Publicerad: ${new Date(book.published).toLocaleDateString()}</p>
           <p>Böcker i lager: ${book.quantity}, </p>
         </div>`
-        
-        // let span = document.createElement('span');
-        // let li = document.createElement('li');
-        // let a = document.createElement('a');
-
-        // a.id = book.book_id;
-        // a.innerText = book.title
-
-        // li.appendChild(a);
-        // ul.appendChild(li);
       }
 
     }
