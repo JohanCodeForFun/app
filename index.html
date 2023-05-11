@@ -11,19 +11,19 @@
 <body class="body-container">
   <nav>
     <h3>Biblioteket</h3>
-    <ul>
-      <li><a href="/">Sök</a></li>
-      <li><a href="/create">Lägg till bok</a></li>
-      <li><a href="/update">Uppdarera</a></li>
-      <li><a href="/delete">Ta bort</a></li>
-      <li><a href="/chat">Chat</a></li>
+    <ul class="nav-ul">
+      <li class="nav-li"><a href="/">Sök</a></li>
+      <li class="nav-li"><a href="/create">Lägg till bok</a></li>
+      <li class="nav-li"><a href="/update">Uppdarera</a></li>
+      <li class="nav-li"><a href="/delete">Ta bort</a></li>
+      <li class="nav-li"><a href="/chat">Chat</a></li>
     </ul>
   </nav>
   <div class="main-container">
 
     <aside class="search-form">
       <input type="text" name="search" id="search" placeholder="Sök">
-      <button>Sök</button>
+      <button id="searchBtn">Sök</button>
 
       <div class="radio-input">
         <input type="radio" id="author" name="search-radio" value="author" checked>
@@ -37,7 +37,57 @@
     </aside>
     <main class="catalogue-container">
       catalogue...
+      <ul id="searchResults">
+        <!-- sökresultat -->
+      </ul>
     </main>
   </div>
+
+  <script>
+    const searchBtn = document.querySelector('#searchBtn');
+
+    searchBtn.addEventListener('click', () => {
+      // getSearchResults();
+      getResultsByKeyWord();
+    });
+
+    async function getSearchResults() {
+      const ul = document.querySelector('#searchResults');
+
+      let catalogueResult = await getResultsByKeyWord();
+
+      for (const book of catalogueResult) {
+        let li = document.createElement('li');
+        let a = document.createElement('a');
+
+        a.id = book.book_id;
+        a.innerText = book.title
+      }
+
+      li.appendChild(a);
+      ul.appendChild(li);
+    }
+
+    async function getResultsByKeyWord() {
+      let keyword = document.querySelector('#search');
+
+      const options = {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json'
+        }}
+      
+        let response = await fetch('http://localhost:3001/catalogue/all')
+        .catch(err => {
+          console.error(err)
+        });
+
+        let data = await response.json();
+        console.log(data);
+
+        return data
+    }
+
+  </script>
 </body>
 </html>
