@@ -18,7 +18,7 @@ nav {
   padding: .5rem;
 }
 
-ul {
+.nav-ul {
   list-style-type: none;
   margin: 0;
   padding: .3rem 2rem;
@@ -26,7 +26,7 @@ ul {
   border-radius: 2rem;
 }
 
-li {
+.nav-li {
   display: inline;
   padding: .3rem;
 }
