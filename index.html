@@ -1,115 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Library | Home</title>
-  <link rel="stylesheet" href="styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library | Home</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="body-container">
+    <nav>
+      <h3>Biblioteket</h3>
+      <ul class="nav-ul">
+        <li class="nav-li"><a href="/">Sök</a></li>
+        <li class="nav-li"><a href="/create">Lägg till bok</a></li>
+        <li class="nav-li"><a href="/update">Uppdarera</a></li>
+        <li class="nav-li"><a href="/delete">Ta bort</a></li>
+        <li class="nav-li"><a href="/chat">Chat</a></li>
+      </ul>
+    </nav>
+    <div class="main-container">
+      <aside class="search-form">
+        <input type="text" name="search" id="search" placeholder="Sök" />
+        <button id="searchBtn">Sök</button>
 
-</head>
-<body class="body-container">
-  <nav>
-    <h3>Biblioteket</h3>
-    <ul class="nav-ul">
-      <li class="nav-li"><a href="/">Sök</a></li>
-      <li class="nav-li"><a href="/create">Lägg till bok</a></li>
-      <li class="nav-li"><a href="/update">Uppdarera</a></li>
-      <li class="nav-li"><a href="/delete">Ta bort</a></li>
-      <li class="nav-li"><a href="/chat">Chat</a></li>
-    </ul>
-  </nav>
-  <div class="main-container">
+        <div class="radio-input">
+          <input
+            type="radio"
+            id="author"
+            name="search-radio"
+            class="search-radio"
+            value="author"
+            checked
+          />
+          <label for="author">Författare</label>
+        </div>
+        <div class="radio-input">
+          <input
+            type="radio"
+            id="title"
+            name="search-radio"
+            class="search-radio"
+            value="title"
+          />
+          <label for="title">Titel</label>
+        </div>
+      </aside>
+      <main class="catalogue-container">
+        <div id="searchResults">
+          <!-- sökresultat -->
+        </div>
+      </main>
+    </div>
 
-    <aside class="search-form">
-      <input type="text" name="search" id="search" placeholder="Sök">
-      <button id="searchBtn">Sök</button>
+    <script>
+      const searchBtn = document.querySelector("#searchBtn");
+      let searchSelection = document.querySelector(
+        'input[name="search-radio"]:checked'
+      ).value;
 
-      <div class="radio-input">
-        <input type="radio" id="author" name="search-radio" value="author" checked>
-        <label for="author">Författare</label>
-      </div>
-      <div class="radio-input">
-        <input type="radio" id="title" name="search-radio" value="title">
-        <label for="title">Titel</label>
-      </div>
-    
-    </aside>
-    <main class="catalogue-container">
-      <div id="searchResults">
-        <!-- sökresultat -->
-      </div>
-    </main>
-  </div>
+      searchBtn.addEventListener("click", () => {
+        getSearchResults();
+      });
 
-  <script>
-    const searchBtn = document.querySelector('#searchBtn');
+      async function getSearchResults() {
+        const div = document.querySelector("#searchResults");
 
-    searchBtn.addEventListener('click', () => {
-      getSearchResults();
-    });
+        // reset div content to '' for each search
+        div.innerHTML = "";
 
-    async function getSearchResults() {
-      const div = document.querySelector('#searchResults');
+        let catalogueResult = await getResultsByKeyWord();
+        console.log(catalogueResult);
 
-      let catalogueResult = await getResultsByKeyWord();
-      console.log(catalogueResult)
-
-      for (const book of catalogueResult) {
-
-        div.innerHTML += `
+        for (const book of catalogueResult) {
+          div.innerHTML += `
         <div class="catalogue-result">
-          <p>book id: ${book.book_id}</p>
-          <p>Titel: ${book.title}. Författare: ${book.author}.</p>
-          <p>Genre: ${book.genre}. Publicerad: ${new Date(book.published).toLocaleDateString()}</p>
-          <p>Böcker i lager: ${book.quantity}, </p>
-        </div>`
+          <p>Titel: ${book.title}. </p>
+          <p>Författare: ${book.author}.</p>
+          <p>Genre: ${book.genre}. Publicerad: ${new Date(
+            book.published
+          ).toLocaleDateString()}</p>
+          <p>Book id: ${book.book_id}. Böcker i lager: ${book.quantity}, Böcker utlånade: ${book.loaned}, </p>
+        </div>`;
+        }
       }
 
-    }
+      async function getResultsByKeyWord() {
+        let keyword = document.querySelector("#search").value;
 
-    async function getResultsByKeyWord() {
-      let keyword = document.querySelector('#search').value;
+        // handle search for author
+        if (keyword !== "" && searchSelection === "author") {
+          const options = {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+            },
+          };
 
-      // if user searches for empty string, return entire catalogue of books
-      // /[A-Za-z0-]+/ regex to match only alphabetics and numbers
-      if (keyword === '') {
+          let response = await fetch(
+            `http://localhost:3001/library/search-author?${keyword}`
+          ).catch((err) => {
+            console.error(err);
+          });
 
-        const options = {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json'
-        }}
-      
-        let response = await fetch('http://localhost:3001/catalogue/all')
-        .catch(err => {
-          console.error(err)
-        });
+          let data = await response.json();
+          console.log(data);
 
-        let data = await response.json();
-        console.log(data);
+          return data;
+        }
 
-        return data
-    } else {
-      const options = {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json'
-        }}
-      
-        let response = await fetch(`http://localhost:3001/library/search?${keyword}`)
-        .catch(err => {
-          console.error(err)
-        });
+        // handle search for title
+        if (keyword !== "" && searchSelection === "title") {
+          // not working right now
+        }
 
-        let data = await response.json();
-        console.log(data);
+        if (keyword === "") {
+          const options = {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+            },
+          };
 
-        return data
-    }
-  }
+          let response = await fetch(
+            "http://localhost:3001/catalogue/all"
+          ).catch((err) => {
+            console.error(err);
+          });
 
+          let data = await response.json();
 
-  </script>
-</body>
+          return data;
+        }
+      }
+    </script>
+  </body>
 </html>
