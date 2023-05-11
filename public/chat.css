@@ -1,0 +1,21 @@
+.chat-container {
+  padding: 1rem;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.message-box {
+  border: 1px solid black;
+  height:200px;
+  width: 500px;
+  padding: .3rem;
+  overflow-y: scroll;
+}
+
+.message {
+  padding: .1rem;
+  height:25px;
+  width: 95%;
+}
