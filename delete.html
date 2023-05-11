@@ -11,16 +11,48 @@
 <body class="body-container">
   <nav>
     <h3>Biblioteket</h3>
-    <ul>
-      <li><a href="/">Sök</a></li>
-      <li><a href="/create">Lägg till bok</a></li>
-      <li><a href="/update">Uppdarera</a></li>
-      <li><a href="/delete">Ta bort</a></li>
-      <li><a href="/chat">Chat</a></li>
+    <ul class="nav-ul">
+      <li class="nav-li"><a href="/">Sök</a></li>
+      <li class="nav-li"><a href="/create">Lägg till bok</a></li>
+      <li class="nav-li"><a href="/update">Uppdarera</a></li>
+      <li class="nav-li"><a href="/delete">Ta bort</a></li>
+      <li class="nav-li"><a href="/chat">Chat</a></li>
     </ul>
   </nav>
   <div class="main-container">
-  <h1>Library | Tabort bok</h1>
+  <h1>Library | Ta bort bok</h1>
+  <form action="" method="DELETE" class="add-form">
+    <div class="form-input">
+      <label for="delete">Ta bort bok: </label>
+      <input id="book_id" type="text" name="book_id" placeholder="Fyll i book id du vill tabort" autofocus>
+    </div>
+    <div class="form-input-btn">
+      <button id="deleteBookBtn" type="submit">Ta bort bok ur systemet</button>
+      </div>
+    </form>
   </div>
+
+  <script>
+
+    const deleteBtn = document.querySelector('#deleteBookBtn');
+
+    deleteBtn.addEventListener('click', (e) => {
+      e.preventDefault()
+
+      const options = {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ book_id: book_id.value })
+      };
+      fetch('http://localhost:3001/catalogue/remove', options)
+      .then(response => console.log(response))
+      .catch(err => {
+        console.error(err)
+      })
+    })
+
+  </script>
 </body>
 </html>
